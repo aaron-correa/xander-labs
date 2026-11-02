@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xander Labs | Data analytics, dashboards and automation</title>
+<meta name="description" content="Xander Labs builds dashboards, automation, process improvement and AI solutions for businesses in India and the UAE. Based in Bengaluru.">
+<meta property="og:title" content="Xander Labs">
+<meta property="og:description" content="Dashboards, automation and process improvement for businesses in India and the UAE.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://xanderlabs.in">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231F6B4F'/%3E%3Cpath d='M9 9l14 14M23 9L9 23' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFBF8; --ink:#1B2420; --muted:#55615B; --line:#D8DDD6;
+  --green:#1F6B4F; --green-dark:#164F3A; --cell:#F2F5EF; --amber:#F6D77A;
+  --head:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --body:'Public Sans','Segoe UI',system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--green)}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--head);line-height:1.1;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.4rem,5.5vw,3.9rem);font-weight:700}
+h2{font-size:clamp(1.7rem,3.2vw,2.3rem);font-weight:700;margin-bottom:28px}
+h3{font-size:1.25rem;font-weight:700}
+p{margin:0 0 1em}
+
+header{border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:10}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{font:700 1.25rem var(--head);color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:26px;height:26px;border-radius:6px;background:var(--green);display:inline-block;position:relative}
+.logo i::before,.logo i::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2.5px;background:#fff;border-radius:2px}
+.logo i::before{transform:translate(-50%,-50%) rotate(45deg)}
+.logo i::after{transform:translate(-50%,-50%) rotate(-45deg)}
+nav{display:flex;align-items:center;gap:22px;font-size:.95rem}
+nav a{color:var(--ink);text-decoration:none}
+nav a:hover{color:var(--green)}
+.btn{display:inline-block;font:600 1rem var(--body);padding:12px 22px;border-radius:8px;background:var(--green);color:#fff;text-decoration:none;border:2px solid var(--green);cursor:pointer;transition:background .15s}
+.btn:hover{background:var(--green-dark);border-color:var(--green-dark)}
+.btn.alt{background:transparent;color:var(--green)}
+.btn.alt:hover{background:var(--cell)}
+nav .btn{padding:8px 16px;color:#fff}
+
+.hero{padding:72px 0 80px;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;background-position:-1px -1px;position:relative}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(251,251,248,.55),var(--paper) 92%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.lede{font-size:1.2rem;color:var(--muted);max-width:34em;margin:22px 0 30px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+
+.sheet{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(27,36,32,.08);overflow:hidden;font-size:.9rem}
+.sheet-top{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--cell);gap:10px}
+.sheet-top span{color:var(--muted);font-size:.85rem}
+.sheet-top button{font:600 .85rem var(--body);padding:6px 14px;border-radius:6px;border:2px solid var(--green);background:var(--green);color:#fff;cursor:pointer}
+.sheet-top button[data-state="done"]{background:#fff;color:var(--green)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;height:38px}
+thead th{background:var(--cell);color:var(--muted);font-weight:500;text-align:center;font-size:.8rem;height:30px}
+tbody th{background:var(--cell);color:var(--muted);font-weight:500;width:36px;text-align:center;font-size:.8rem}
+td.num{text-align:right}
+tr.head td{font-weight:600;background:#fff}
+tr.total td{font-weight:700;background:var(--amber)}
+td.fresh{animation:flash .9s ease-out}
+@keyframes flash{from{background:var(--amber)}to{background:transparent}}
+.sheet-note{padding:10px 14px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+
+section{padding:76px 0;border-top:1px solid var(--line)}
+.rows{border-top:1px solid var(--ink)}
+.row{display:grid;grid-template-columns:280px 1fr;gap:32px;padding:24px 0;border-bottom:1px solid var(--line)}
+.row p{margin:0;color:var(--muted);max-width:40em}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.two p{max-width:34em}
+.jobs{margin:0;padding:0;list-style:none}
+.jobs li{padding:10px 0 10px 22px;border-bottom:1px solid var(--line);position:relative}
+.jobs li::before{content:"";position:absolute;left:0;top:1.1em;width:9px;height:9px;background:var(--green);border-radius:2px}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
+ol.steps li{counter-increment:s;border-top:3px solid var(--green);padding-top:16px}
+ol.steps li::before{content:"Step " counter(s);display:block;font:600 .85rem var(--body);color:var(--green);margin-bottom:6px}
+ol.steps p{color:var(--muted);margin:6px 0 0;font-size:1rem}
+.contact{background:var(--ink);color:#fff;border-top:0}
+.contact h2{color:#fff}
+.contact p{color:#C9D3CD;max-width:36em}
+.contact a.mail{color:#fff;font:700 clamp(1.4rem,3vw,2rem) var(--head);text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--amber)}
+.contact .btn{background:#fff;color:var(--ink);border-color:#fff}
+.contact .btn:hover{background:var(--amber);border-color:var(--amber)}
+.contact .btn.alt{background:transparent;color:#fff}
+.contact .btn.alt:hover{background:rgba(255,255,255,.1)}
+footer{background:var(--ink);color:#9FADA6;font-size:.9rem;padding:22px 0;border-top:1px solid #33403A}
+
+.intro{color:var(--muted);max-width:40em;margin:-12px 0 28px}
+.samples{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.sample{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.viz{background:var(--cell);padding:16px;border-bottom:1px solid var(--line);height:200px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.sample .txt{padding:16px 18px 20px}
+.sample .txt p{color:var(--muted);font-size:.97rem;margin:8px 0 0}
+.tag{display:block;font-size:.8rem;color:var(--muted);margin-bottom:6px}
+.kpis{display:flex;gap:8px}
+.kpis div{flex:1;background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-size:.75rem;color:var(--muted)}
+.kpis b{display:block;font:700 1.05rem var(--head);color:var(--ink)}
+.steps-row{display:flex;gap:5px}
+.steps-row i{width:22px;height:22px;border-radius:4px;background:#C2CAC3}
+.steps-row.after i{background:var(--green)}
+.lbl{font-size:.85rem;color:var(--muted)}
+@media (max-width:860px){.samples{grid-template-columns:1fr}}
+@media (max-width:860px){
+  .hero .wrap,.two{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr;gap:6px}
+  ol.steps{grid-template-columns:1fr 1fr}
+  nav a:not(.btn){display:none}
+  .hero{padding:48px 0 56px}
+  section{padding:56px 0}
+}
+@media (max-width:520px){ol.steps{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}td.fresh{animation:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top" aria-label="Xander Labs home"><i></i>Xander Labs</a>
+    <nav aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#samples">Sample work</a>
+      <a href="#process">How it works</a>
+      <a href="#about">About</a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Stop rebuilding the same report every week.</h1>
+        <p class="lede">I build dashboards, automations and cleaner processes for businesses in India and the UAE, so the numbers are ready when you need them.</p>
+        <div class="cta">
+          <a class="btn" href="#contact">Tell me what you do by hand</a>
+          <a class="btn alt" href="#services">See what I build</a>
+        </div>
+      </div>
+
+      <div class="sheet" aria-label="Example of a macro cleaning a sales sheet">
+        <div class="sheet-top">
+          <span>sales_export.xlsx</span>
+          <button id="run" type="button" data-state="idle">Run macro</button>
+        </div>
+        <table>
+          <thead><tr><th></th><th>A</th><th>B</th><th>C</th></tr></thead>
+          <tbody id="grid"></tbody>
+        </table>
+        <div class="sheet-note" id="note" aria-live="polite">Export as it arrives: mixed spacing, text numbers, no total.</div>
+      </div>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <h2>What I build</h2>
+      <div class="rows">
+        <div class="row">
+          <h3>Excel macro automation</h3>
+          <p>VBA macros that clean exports, merge files and produce the weekly or monthly report from one button.</p>
+        </div>
+        <div class="row">
+          <h3>Power BI and Tableau dashboards</h3>
+          <p>Dashboards connected to your Excel files, databases or exports, built around the questions your team actually asks.</p>
+        </div>
+        <div class="row">
+          <h3>Process automation</h3>
+          <p>If a task follows steps, it can usually be automated. I choose the right tool once I understand the process, then build it.</p>
+        </div>
+        <div class="row">
+          <h3>Process standardization</h3>
+          <p>Written, repeatable steps and templates, so the work gets done the same way no matter who does it.</p>
+        </div>
+        <div class="row">
+          <h3>Process improvement</h3>
+          <p>I map how the work flows today, find the delays and duplicate steps, and fix them.</p>
+        </div>
+        <div class="row">
+          <h3>Business analysis</h3>
+          <p>Gathering requirements, writing them up clearly and turning them into something a team can build or buy.</p>
+        </div>
+        <div class="row">
+          <h3>AI-driven solutions</h3>
+          <p>Practical uses of AI in your workflow, such as drafting, summarising, sorting and pulling data out of documents.</p>
+        </div>
+        <div class="row">
+          <h3>Data analysis and reporting</h3>
+          <p>Sales, finance and operations data pulled together and explained, with clear findings instead of raw tables.</p>
+        </div>
+        <div class="row">
+          <h3>Excel templates</h3>
+          <p>Trackers, budgets, inventory sheets and MIS formats set up to match how your business works.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="samples">
+    <div class="wrap">
+      <h2>Sample work</h2>
+      <p class="intro">I have not published client work yet, so these three samples use made-up data. They show the kind of thing I build.</p>
+      <div class="samples">
+        <article class="sample">
+          <div class="viz">
+            <div class="kpis"><div><b>&#8377;4.8 Cr</b>Revenue</div><div><b>1,260</b>Orders</div><div><b>18%</b>Margin</div></div>
+            <svg viewBox="0 0 300 118" role="img" aria-label="Bar chart of revenue by region, sample data"><g fill="#1F6B4F"><rect x="10" y="10" width="40" height="88"/><rect x="66" y="30" width="40" height="68"/><rect x="122" y="46" width="40" height="52"/><rect x="178" y="60" width="40" height="38"/><rect x="234" y="76" width="40" height="22" fill="#E0B93F"/></g><g font-size="10" fill="#55615B" text-anchor="middle"><text x="30" y="112">North</text><text x="86" y="112">South</text><text x="142" y="112">East</text><text x="198" y="112">West</text><text x="254" y="112">Central</text></g></svg>
+          </div>
+          <div class="txt"><span class="tag">Sample, dummy data</span><h3>Regional sales dashboard</h3><p>Built in Power BI or Tableau. Headline numbers, revenue by region and a monthly trend, with filters for product and salesperson.</p></div>
+        </article>
+        <article class="sample">
+          <div class="viz">
+            <svg viewBox="0 0 300 110" role="img" aria-label="Twelve branch files go through a macro into one MIS report, sample">
+              <g fill="#fff" stroke="#9AA59E"><rect x="6" y="30" width="78" height="50" rx="6"/><rect x="216" y="30" width="78" height="50" rx="6"/></g>
+              <rect x="111" y="30" width="78" height="50" rx="6" fill="#1F6B4F"/>
+              <g font-size="11" text-anchor="middle" fill="#1B2420"><text x="45" y="52">12 branch</text><text x="45" y="67">files</text><text x="255" y="52">1 MIS</text><text x="255" y="67">report</text><text x="150" y="60" fill="#fff" font-weight="600">Macro</text></g>
+              <g fill="#55615B"><polygon points="90,55 104,48 104,62"/><polygon points="195,55 209,48 209,62"/></g>
+            </svg>
+          </div>
+          <div class="txt"><span class="tag">Sample, dummy data</span><h3>Weekly MIS pack, automated</h3><p>A macro collects the branch files, flags missing or odd entries, and builds the management report without anyone copying and pasting.</p></div>
+        </article>
+        <article class="sample">
+          <div class="viz">
+            <div class="lbl">Before: 9 steps, 3 approvals</div>
+            <div class="steps-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="lbl">After: 5 steps, 1 approval</div>
+            <div class="steps-row after"><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="txt"><span class="tag">Sample, dummy data</span><h3>Purchase approval, simplified</h3><p>Map the process, remove the repeated approvals and handoffs, then write the new steps down so everyone follows them.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="who">
+    <div class="wrap two">
+      <div>
+        <h2>Who this is for</h2>
+        <p>Owners and teams at small and mid-size companies that run on spreadsheets and have outgrown them. If someone on your team spends hours each week copying, pasting and reformatting, that job can usually be automated.</p>
+        <p>I work with clients across India and the UAE. I am based in Bengaluru, and the UAE is only 1.5 hours behind, so calls are easy to schedule.</p>
+      </div>
+      <div>
+        <h2>Jobs that suit this well</h2>
+        <ul class="jobs">
+          <li>Monthly MIS packs for management</li>
+          <li>Sales and pipeline trackers</li>
+          <li>Invoice and GST or VAT reconciliation sheets</li>
+          <li>Stock and inventory reports</li>
+          <li>Merging many branch or team files into one</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><h3>You describe the task</h3><p>Send me the files and tell me what you do by hand today.</p></li>
+        <li><h3>I scope it</h3><p>I review what you sent and reply with what I will build and what it costs.</p></li>
+        <li><h3>I build and demo</h3><p>We go through the finished work together on a call.</p></li>
+        <li><h3>You take over</h3><p>You get the final file and a short guide for using it.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap two">
+      <div>
+        <h2>About</h2>
+        <p>I am Aaron Shawn, the person behind Xander Labs. I have spent more than six years working as a data and business analyst, and I hold an MBA in Data Science and the Google Data Analytics Professional Certificate.</p>
+        <p>You work with me directly, from the first message to the final handover.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2>Tell me what you are stuck on</h2>
+      <p>A short message is enough. Say what the task is, how often it comes up and what the files look like. I will reply with questions or a plan.</p>
+      <p><a class="mail" href="mailto:hello@xanderlabs.in">hello@xanderlabs.in</a></p>
+      <div class="cta">
+        <a class="btn" href="https://wa.me/919481514441?text=Hi%2C%20I%20found%20Xander%20Labs%20and%20have%20a%20reporting%20task" rel="noopener">Message on WhatsApp</a>
+        <a class="btn alt" href="mailto:hello@xanderlabs.in?subject=Enquiry%20for%20Xander%20Labs">Send an email</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">&copy; 2026 Xander Labs, Bengaluru, India</div>
+</footer>
+
+<script>
+(function(){
+  var raw=[["north ","42","\u20B9 1,20,000"],["SOUTH","37","98000.00"],["East","29 ","\u20B985,500"],["west","51","1,43,250"],["Central","18","\u20B9 61,000"]];
+  var grid=document.getElementById('grid'),btn=document.getElementById('run'),note=document.getElementById('note');
+  var fmt=new Intl.NumberFormat('en-IN');
+  function cell(tag,text,cls){var c=document.createElement(tag);c.textContent=text;if(cls)c.className=cls;return c}
+  function row(n,vals,cls,fresh){
+    var tr=document.createElement('tr');if(cls)tr.className=cls;
+    tr.appendChild(cell('th',n));
+    vals.forEach(function(v,i){tr.appendChild(cell('td',v,(i>0?'num':'')+(fresh?' fresh':'')))});
+    return tr;
+  }
+  function draw(clean){
+    grid.textContent='';
+    if(!clean){
+      grid.appendChild(row(1,['Region','Orders','Revenue'],'head'));
+      raw.forEach(function(r,i){grid.appendChild(row(i+2,r))});
+      return;
+    }
+    var data=raw.map(function(r){
+      return {region:r[0].trim().toLowerCase().replace(/^./,function(c){return c.toUpperCase()}),
+              orders:parseInt(r[1],10),
+              rev:parseFloat(r[2].replace(/[^0-9.]/g,''))};
+    }).sort(function(a,b){return b.rev-a.rev});
+    grid.appendChild(row(1,['Region','Orders','Revenue (INR)'],'head'));
+    var o=0,t=0;
+    data.forEach(function(d,i){o+=d.orders;t+=d.rev;grid.appendChild(row(i+2,[d.region,String(d.orders),fmt.format(d.rev)],'',true))});
+    grid.appendChild(row(data.length+2,['Total',String(o),fmt.format(t)],'total',true));
+  }
+  btn.addEventListener('click',function(){
+    var done=btn.getAttribute('data-state')==='done';
+    if(done){draw(false);btn.setAttribute('data-state','idle');btn.textContent='Run macro';note.textContent='Export as it arrives: mixed spacing, text numbers, no total.';}
+    else{draw(true);btn.setAttribute('data-state','done');btn.textContent='Reset';note.textContent='Cleaned, sorted by revenue and totalled in one click.';}
+  });
+  draw(false);
+})();
+</script>
+</body>
+</html>
